@@ -29,6 +29,12 @@ class App extends React.Component {
     console.log(this.state);
   };
 
+  deleteTodo = (index) => {
+    this.setState({
+      todos: this.state.todos.filter((_,i)=> index !== i)
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -42,7 +48,7 @@ class App extends React.Component {
         </Grid>
         <Grid container justify="center">
           <Grid item md={8}>
-            <TodoList todos={this.state.todos}/>
+            <TodoList todos={this.state.todos} deleteTodo={this.deleteTodo} />
           </Grid>
         </Grid>
       </React.Fragment>

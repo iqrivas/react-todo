@@ -7,14 +7,14 @@ import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const TodoList = ({ todos }) => (
+const TodoList = ({ todos, deleteTodo }) => (
     <List>
         {todos.map((todo, index) => (
             <ListItem button key={index}>
                 <Checkbox />
                 <ListItemText primary={todo} />
                 <ListItemSecondaryAction>
-                    <IconButton>
+                    <IconButton onClick={()=>deleteTodo(index)}>
                         <DeleteIcon />
                     </IconButton>
                 </ListItemSecondaryAction>
@@ -22,6 +22,5 @@ const TodoList = ({ todos }) => (
         ))}
     </List>
 );
-
 
 export default TodoList
