@@ -11,34 +11,69 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 
-const App = () => {
-  return (
-    <React.Fragment>
-      <Typography variant="h2" align="center" gutterBottom>
-        To-Do List
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: "",
+      todos: []
+    };
+  }
+
+  updateValue = event => {
+    this.setState({
+      value: event.target.value
+    });
+  };
+
+  saveTodo = () => {
+    if (this.state.value) {
+      this.setState({
+        todos: [...this.state.todos, this.state.value],
+        value: "",
+      });
+    }
+    console.log(this.state);
+  };
+
+  render() {
+    return (
+      <React.Fragment>
+        <Typography variant="h2" align="center" gutterBottom>
+          To-Do List
       </Typography>
-      <Grid container justify="center">
-        <Grid item>
-          <TextField type="text" placeholder="Add todo..." margin="normal" />
+        <Grid container justify="center">
+          <Grid item>
+            <form onSubmit={event => {
+              event.preventDefault();
+              this.saveTodo();
+            }}>
+              <TextField type="text" placeholder="Add todo..." margin="normal" value={this.state.value} onChange={this.updateValue} />
+            </form>
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container justify="center">
-        <Grid item md={8}>
-          <List>
-            <ListItem button>
-              <Checkbox/>
-                <ListItemText primary="Check the prework"/>
-                <ListItemSecondaryAction>
-                  <IconButton>
-                    <DeleteIcon/>
-                  </IconButton>
-                </ListItemSecondaryAction>
-            </ListItem>
-          </List>
+        <Grid container justify="center">
+          <Grid item md={8}>
+            <List>
+              {this.state.todos.map((todo,index) => {
+                return (
+                  <ListItem button key={index}>
+                    <Checkbox />
+                    <ListItemText primary={todo} />
+                    <ListItemSecondaryAction>
+                      <IconButton>
+                        <DeleteIcon />
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                );
+              })}
+            </List>
+          </Grid>
         </Grid>
-      </Grid>
-    </React.Fragment>
-  );
-};
+      </React.Fragment>
+    );
+  };
+}
 
 export default App;
