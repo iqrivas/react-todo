@@ -22,7 +22,12 @@ class App extends React.Component {
   saveTodo = () => {
     if (this.state.value) {
       this.setState({
-        todos: [...this.state.todos, this.state.value],
+        todos: [
+          ...this.state.todos,
+          {
+            value: this.state.value,
+            completed: false
+          }],
         value: "",
       });
     }
@@ -31,8 +36,14 @@ class App extends React.Component {
 
   deleteTodo = (index) => {
     this.setState({
-      todos: this.state.todos.filter((_,i)=> index !== i)
+      todos: this.state.todos.filter((_, i) => index !== i)
     });
+  };
+
+  toggleCompleted = (index) => {
+    const todos = [...this.state.todos];
+    todos[index].completed = !todos[index].completed;
+    this.setState({todos});
   };
 
   render() {
@@ -48,7 +59,7 @@ class App extends React.Component {
         </Grid>
         <Grid container justify="center">
           <Grid item md={8}>
-            <TodoList todos={this.state.todos} deleteTodo={this.deleteTodo} />
+            <TodoList todos={this.state.todos} deleteTodo={this.deleteTodo} toggleCompleted={this.toggleCompleted} />
           </Grid>
         </Grid>
       </React.Fragment>
